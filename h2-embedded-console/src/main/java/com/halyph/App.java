@@ -28,8 +28,8 @@ public class App {
             System.out.println("> " + rs.getString("name"));
         }
 
-        // start a TCP server
-        Server server = Server.createTcpServer().start(); // (4)
+        Server webServer = Server.createWebServer("-webAllowOthers","-webPort","8082").start(); // (4a)
+        Server server = Server.createTcpServer("-tcpAllowOthers","-tcpPort","9092").start();    // (4b)
         // .. use in embedded mode ..
 
         // or use it from another process:
@@ -48,6 +48,7 @@ public class App {
 
         rs.close();
         server.stop();
+        webServer.stop();
         conn.close();
         System.out.println("Server is STOPPED");
     }
